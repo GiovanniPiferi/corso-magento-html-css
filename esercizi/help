@@ -1,0 +1,104 @@
+come posso usare le API di magento 2 per prendere i dati customer, di un ordine?
+
+come si crea una cart rule?
+
+magento 2 ,dove modifico l'impostazione lingua se ho uno store con piu viste?
+Per prima cosa dovrai andare sul Marketplace di Magento. 
+Qui troverai una grande varietà di pacchetti lingua disponibili, 
+che ti consentiranno di vedere la Store View del tuo sito nella lingua che hai selezionato. 
+Scegli quindi il pacchetto lingua che preferisci e scaricalo.
+
+qual è lo stack obbligatorio di magento 2?
+
+quali sono le criticità durante l'installazione?
+
+  
+differenza tra scaricare magento 2 da composer ads github
+  composer:
+apri il terminale e crea il progetto con il comando:
+$
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition=2.x.x <installation directory name>
+dove <installation directory name> è il nome della directory dove vuoi installare Magento e 2.x.x è la versione che volete installare. Es. 2.3.3
+
+entra nella directory del progetto e cambia la configurazione del composer (questo se si installa Magento in locale, per evitare i controlli sull’url non in https):
+$
+composer config secure-http false
+dai il permesso di esecuzione per l’utente proprietario:
+$
+chmod u+x bin/magento
+crea il database:
+$
+mysql -u root -p
+$
+CREATE DATABASE <database_name>;
+lancia l’installazione e la configurazione iniziale:
+$
+bin/magento setup:install --backend-frontname="<admin_path>" \
+$
+--db-host="<database_host>" --db-name="<database_name>" --db-user="<database_user>" --db-password="<database_psw>" \
+$
+--currency="EUR" --language="it_IT" --timezone="Europe/Rome" \
+$
+--base-url="http://<your_server_location>/<installation directory name>/" \
+$
+--base-url-secure="https://<your_server_location>/<installation directory name>/" \
+$
+--use-secure="1" --use-secure-admin="1" --use-rewrites="1" \
+$
+--admin-user="<admin_user>" --admin-password="<psw>" --admin-email="<admin_email>" \
+$
+--admin-firstname="<admin_firstname>" --admin-lastname="<admin_lastname>"
+sostituisci alle variabili tra <> i dati corretti. Aggiungi –cleanup-database se vuoi svuotare il database prima di installare Magento.
+
+  github:
+crea il file auth.json all’interno dell’utente owner del sito (es. /home/mario/.composer/auth.json), con il seguente codice:
+$
+{
+$
+"github-oauth": {"github.com": "<you github id outh>"},
+$
+"http-basic": {
+$
+"repo.magento.com": {
+$
+"username": "<public_key>",
+$
+"password": "<private_key>"
+$
+}
+$
+}
+$
+}
+dove public_key e private_key devo essere recuperati dal tuo account sul marketplace Magento a questo indirizzo (nella sezione MarketPlace -> My Access Keys)
+
+clona la repository ufficiale con la versione magento che ti interessa:
+$
+git clone git@github.com:magento/magento2.git
+$
+git checkout tags/2.3.3 -b 2.3
+$
+composer install
+crea il database:
+$
+mysql -u root -p
+$
+CREATE DATABASE <database_name>;
+installa e configura magento tramite CLI:
+$
+bin/magento setup:install --backend-frontname="<admin_path>" \
+$
+--db-host="<database_host>" --db-name="<database_name>" --db-user="<database_user>" --db-password="<database_psw>" \
+$
+--currency="EUR" --language="it_IT" --timezone="Europe/Rome" \
+$
+--base-url="http://<your_server_location>/<installation directory name>/" \
+$
+--base-url-secure="https://<your_server_location>/<installation directory name>/" \
+$
+--use-secure="1" --use-secure-admin="1" --use-rewrites="1" \
+$
+--admin-user="<admin_user>" --admin-password="<psw>" --admin-email="<admin_email>" \
+$
+--admin-firstname="<admin_firstname>" --admin-lastname="<admin_lastname>"
+sostituisci alle variabili tra <> i dati corretti. Aggiungi –cleanup-database se vuoi svuotare il database prima di installare Magento.
